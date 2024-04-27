@@ -1,12 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider as ReduxProdiver } from 'react-redux'
+import * as SplashScreen from 'expo-splash-screen';
+
+import HomeScreen from './screen/HomeScreen';
+import store from './store';
+import CardList from './screen/CardList';
+import CreditCardFormScreen from './screen/CreditCardFormScreen';
+import { useFonts } from 'expo-font';
+import { useCallback } from 'react';
+import HeaderLeftNavigation from './components/HeaderLeftNavigation';
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    'FC-rounded': require('./assets/fonts/FC-Subject-rounded.otf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ReduxProdiver store={store}>
+      <NavigationContainer onReady={onLayoutRootView}  >
+        <Stack.Navigator screenOptions={{
+          headerLeft: HeaderLeftNavigation,
+          headerShadowVisible: false
+        }}>
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="CardList" component={CardList} />
+          <Stack.Screen name="CreateCard" component={CreditCardFormScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ReduxProdiver >
   );
 }
 
