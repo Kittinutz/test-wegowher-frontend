@@ -5,6 +5,9 @@ import Container from '../components/Container';
 import FieldInput from '../components/FieldInput';
 import CardBannerIcon from '../components/CardBannerIcon';
 import BaseButton from '../components/BaseButton';
+import VisaVerify from '../components/Icons/VisaVerify';
+import MasterCardVerify from '../components/Icons/MasterCardVerify';
+import OmiseVerify from '../components/Icons/OmiseVerify';
 const { width } = Dimensions.get('window')
 const CreditCardFormScreen = () => {
   return (
@@ -26,17 +29,13 @@ const CreditCardFormScreen = () => {
             <FieldInput label="Expiry date" placeholder="MM/YY" />
           </View>
           <View style={{ width: width / 2 - (48 + 16) }}>
-            <FieldInput label="CVV" placeholder="CVV" />
+            <FieldInput label="CVV" />
           </View>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* Verified by Visa icon */}
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* MasterCard SecureCode icon */}
-            {/* Omise icon */}
-          </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 24, alignItems: 'center', marginTop: 20 }}>
+          <VisaVerify />
+          <MasterCardVerify />
+          <OmiseVerify />
         </View>
       </View>
       <View style={{ marginTop: 20 }}>
