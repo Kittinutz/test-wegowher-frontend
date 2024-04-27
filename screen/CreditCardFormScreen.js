@@ -1,5 +1,5 @@
 // CreditCardFormScreen.js
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import Container from '../components/Container';
 import FieldInput from '../components/FieldInput';
@@ -8,8 +8,22 @@ import BaseButton from '../components/BaseButton';
 import VisaVerify from '../components/Icons/VisaVerify';
 import MasterCardVerify from '../components/Icons/MasterCardVerify';
 import OmiseVerify from '../components/Icons/OmiseVerify';
+import useCreditCardForm from '../hooks/useCreditCardForm';
 const { width } = Dimensions.get('window')
 const CreditCardFormScreen = () => {
+  const {
+    handleCardNumberChange,
+    handleCardNumberBlur,
+    handleCardNumberFocus,
+    handleChangeName,
+    handleChangeExpireDate,
+    handleChangeCVV,
+    cardObject,
+    showedError,
+    handleSubmit,
+  } = useCreditCardForm();
+
+
   return (
     <Container style={{
       display: 'flex',
@@ -21,15 +35,41 @@ const CreditCardFormScreen = () => {
         <FieldInput
           label="ATM/Debit/Credit card number"
           placeholder="0000 0000 0000 0000"
+          onChangeText={handleCardNumberChange}
+          onBlur={handleCardNumberBlur}
+          onFocus={handleCardNumberFocus}
+          value={cardObject.cardNumber}
+          showedError={showedError}
+          limit={16}
           endadornment={<CardBannerIcon />}
         />
-        <FieldInput label="Name on Card" placeholder="Ty Lee" />
+        <FieldInput
+          label="Name on Card"
+          placeholder="Ty Lee"
+          onChangeText={handleChangeName}
+          value={cardObject.holderName}
+          showedError={showedError}
+
+        />
         <View style={styles.coverPartCVC}>
           <View style={{ width: width / 2 }}>
-            <FieldInput label="Expiry date" placeholder="MM/YY" />
+            <FieldInput
+              label="Expiry date"
+              placeholder="MM/YY"
+              onChangeText={handleChangeExpireDate}
+              value={cardObject.expire}
+              showedError={showedError}
+              limit={5}
+            />
           </View>
           <View style={{ width: width / 2 - (48 + 16) }}>
-            <FieldInput label="CVV" />
+            <FieldInput label="CVV"
+              limit={3}
+              onChangeText={handleChangeCVV}
+              value={cardObject.cvv}
+              showedError={showedError}
+            />
+
           </View>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 24, alignItems: 'center', marginTop: 20 }}>
@@ -39,7 +79,7 @@ const CreditCardFormScreen = () => {
         </View>
       </View>
       <View style={{ marginTop: 20 }}>
-        <BaseButton >Add Button</BaseButton>
+        <BaseButton onPress={handleSubmit}>Add Button</BaseButton>
       </View>
     </Container>
   );

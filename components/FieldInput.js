@@ -3,10 +3,14 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 const FieldInput = ({
   onChangeText = () => { },
+  onBlur = () => { },
+  onFocus = () => { },
   value = '',
   label = '',
   placeholder = '',
+  limit,
   endadornment,
+  showedError = ''
 }) => {
   return (
     <View style={styles.container}>
@@ -16,10 +20,23 @@ const FieldInput = ({
           style={styles.textInput}
           placeholder={placeholder}
           value={value}
-          onChangeText={onChangeText}
+          onChangeText={v => {
+            if (typeof limit === undefined) {
+              onChangeText(v)
+            } else if (v.length <= limit) {
+              onChangeText(v)
+            }
+          }}
+          onBlur={onBlur}
+          onFocus={onFocus}
         />
         {endadornment}
       </View>
+      {
+        showedError ? (<Text style={{ fontFamily: 'FC-rounded', color: '#fe0000' }}>
+          Please fill the correct information.
+        </Text>) : null
+      }
     </View>
   );
 };
