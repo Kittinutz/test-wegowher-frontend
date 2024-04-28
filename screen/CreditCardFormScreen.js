@@ -1,4 +1,3 @@
-// CreditCardFormScreen.js
 import React, { useMemo } from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import Container from '../components/Container';
