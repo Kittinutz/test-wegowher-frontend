@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { addCreditCard } from "../store/creditCardSlice";
 import { useNavigation } from "@react-navigation/native";
+import { createCreditCard } from "../service/vaultService";
 
 const useCreditCardForm = () => {
   const dispatch = useDispatch()
@@ -9,8 +10,8 @@ const useCreditCardForm = () => {
   const [showedError, showError] = useState(false);
   const navigation = useNavigation();
   const [cardObject, setCardObject] = useState({
-    cardNumber: '1122 3344 5566 7788',
-    expire: '01/23',
+    cardNumber: '4242 4242 4242 4242',
+    expire: '01/28',
     holderName: 'Kittinut',
     cvv: '123',
   })
@@ -18,13 +19,18 @@ const useCreditCardForm = () => {
     showError(false);
   }, [cardObject])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const isEmptySomeField = Object.values(cardObject).some(field => field === '');
     if (isEmptySomeField) {
       showError(true)
     } else {
-      dispatch(addCreditCard(cardObject))
-      navigation.goBack();
+      try {
+        dispatch(addCreditCard(cardObject))
+        navigation.goBack();
+      } catch (e) {
+        console.error(e)
+      }
+
     }
   }
   const handleCardNumberChange = cardNumber => {

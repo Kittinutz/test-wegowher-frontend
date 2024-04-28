@@ -43,7 +43,7 @@ const CreditCardFormScreen = () => {
           value={cardObject.cardNumber}
           showedError={showedError}
           limit={16}
-          endadornment={<CardBannerIcon />}
+          endadornment={<CardBannerIcon cardNumber={cardObject.cardNumber} />}
         />
         <FieldInput
           label="Name on Card"

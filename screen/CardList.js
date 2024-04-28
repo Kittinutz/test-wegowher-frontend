@@ -8,14 +8,14 @@ const CardList = ({ navigation }) => {
   const goToCreateCard = () => {
     navigation.navigate('CreateCard')
   }
-  const { creditCardList } = useCardList();
-
+  const { creditCardList,
+    handlePayment } = useCardList();
   return (
     <Container style={styles.container}>
       <FlatList
         style={{ flex: 1 }}
         data={creditCardList}
-        renderItem={({ item }) => <CreditCardInfo {...item} />}
+        renderItem={({ item }) => <CreditCardInfo {...item} onPress={handlePayment(item)} />}
         contentContainerStyle={{
           ...(creditCardList.length === 0 ? { flexGrow: 1 } :
             {
@@ -35,9 +35,6 @@ const CardList = ({ navigation }) => {
             </View>
           </View>
         )} />
-      <View>
-        <Button color="cyan" title="Add New Card" onPress={goToCreateCard} />
-      </View>
 
     </Container>
   );

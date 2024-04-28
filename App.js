@@ -1,3 +1,4 @@
+import './base64polifil'
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -36,11 +37,10 @@ export default function App() {
           headerLeft: HeaderLeftNavigation,
           headerShadowVisible: false
         }}>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="CardList" component={CardList} />
-          <Stack.Screen name="CreateCard" component={CreditCardFormScreen} options={{
+          <Stack.Screen name="CardList" component={CardList} options={{
             headerRight: AddCardHeader,
           }} />
+          <Stack.Screen name="CreateCard" component={CreditCardFormScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ReduxProdiver >

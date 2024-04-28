@@ -1,37 +1,39 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import Visa from '../assets/visa_color.png'
-const CreditCardInfo = ({ cardNumber }) => {
+const CreditCardInfo = ({ cardNumber, onPress }) => {
   const cardNumberSplitting = useMemo(() => {
     return cardNumber.split(' ')
   }, [cardNumber])
   return (
-    <View style={styles.card}>
-      <View>
-        <Image source={Visa} />
-      </View>
-      <View style={styles.cardDetails}>
-        <View style={styles.cardNumberWrapper}>
-          {cardNumberSplitting.map((number, index) => {
-            return (
-              <Text key={number} style={[styles.cardNumber, styles.text]}>{index !== cardNumberSplitting.length - 1 ? '••••' : number}</Text>
-
-            )
-          })}
-
+    <Pressable onPress={onPress}>
+      <View style={styles.card}>
+        <View>
+          <Image source={Visa} />
         </View>
-        <View style={styles.cardInfo}>
-          <View style={styles.identitySection}>
-            <Text style={[styles.info, styles.text]}>Name on Card</Text>
-            <Text style={styles.text}>Kittinut</Text>
+        <View style={styles.cardDetails}>
+          <View style={styles.cardNumberWrapper}>
+            {cardNumberSplitting.map((number, index) => {
+              return (
+                <Text key={number + '-' + index} style={[styles.cardNumber, styles.text]}>{index !== cardNumberSplitting.length - 1 ? '••••' : number}</Text>
+
+              )
+            })}
+
           </View>
-          <View style={styles.identitySection}>
-            <Text style={[styles.info, styles.text]}>Expires</Text>
-            <Text style={styles.text} >05/24</Text>
+          <View style={styles.cardInfo}>
+            <View style={styles.identitySection}>
+              <Text style={[styles.info, styles.text]}>Name on Card</Text>
+              <Text style={styles.text}>Kittinut</Text>
+            </View>
+            <View style={styles.identitySection}>
+              <Text style={[styles.info, styles.text]}>Expires</Text>
+              <Text style={styles.text} >05/24</Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

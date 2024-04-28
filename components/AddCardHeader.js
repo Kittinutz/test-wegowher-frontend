@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
-
+import { Image, Pressable, Text } from 'react-native';
+import addIcon from '../assets/add-icon.png'
+import { useNavigation } from '@react-navigation/native';
 const AddCardHeader = () => {
+  const navigation = useNavigation();
+  const handleAddCard = () => {
+    navigation.navigate('CreateCard')
+  }
   return (
     <Text>
-      Here
-    </Text>
+      <Pressable onPress={handleAddCard}>
+        <Image source={addIcon} />
+      </Pressable>
+    </Text >
   );
 };
 
