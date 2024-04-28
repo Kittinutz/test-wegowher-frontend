@@ -2,10 +2,10 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 
 const Container = ({ children, style }) => {
   return (
-    <View style={{
-      ...styles.container,
-      ...style
-    }}>
+    <View style={[
+      styles.container,
+      style
+    ]}>
       {children}
     </View >
   );

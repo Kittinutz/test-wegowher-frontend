@@ -1,21 +1,30 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { addCreditCard } from "../store/creditCardSlice";
+import { useNavigation } from "@react-navigation/native";
 
 const useCreditCardForm = () => {
+  const dispatch = useDispatch()
+  const creditCardList = useSelector(state => state.creditCard.creditCardList)
   const [showedError, showError] = useState(false);
-
+  const navigation = useNavigation();
   const [cardObject, setCardObject] = useState({
-    cardNumber: '',
-    expire: '',
-    holderName: '',
-    cvv: '',
+    cardNumber: '1122 3344 5566 7788',
+    expire: '01/23',
+    holderName: 'Kittinut',
+    cvv: '123',
   })
   useEffect(() => {
     showError(false);
   }, [cardObject])
+
   const handleSubmit = () => {
     const isEmptySomeField = Object.values(cardObject).some(field => field === '');
     if (isEmptySomeField) {
       showError(true)
+    } else {
+      dispatch(addCreditCard(cardObject))
+      navigation.goBack();
     }
   }
   const handleCardNumberChange = cardNumber => {
@@ -43,17 +52,10 @@ const useCreditCardForm = () => {
     })
   }
   const handleChangeExpireDate = (expire) => {
-    if (expire.length == 2) {
-      setCardObject({
-        ...cardObject,
-        expire: expire += '/',
-      })
-    } else {
-      setCardObject({
-        ...cardObject,
-        expire: expire,
-      })
-    }
+    setCardObject({
+      ...cardObject,
+      expire: expire,
+    })
 
   }
   const handleChangeCVV = (cvv) => {
@@ -63,16 +65,31 @@ const useCreditCardForm = () => {
     })
   }
 
+  const handleExpireBlur = () => {
+    setCardObject({
+      ...cardObject,
+      expire: cardObject.expire.match(/.{1,2}/g).join('/'),
+    })
+  }
+  const handleExpireFocus = () => {
+    setCardObject({
+      ...cardObject,
+      expire: cardObject.expire.split('/').join('')
+    })
+  }
+
   return {
     handleCardNumberChange,
     handleCardNumberBlur,
     handleCardNumberFocus,
     handleChangeName,
     handleChangeExpireDate,
+    handleExpireBlur,
+    handleExpireFocus,
     handleChangeCVV,
     showedError,
     cardObject,
-    handleSubmit
+    handleSubmit,
   }
 }
 export default useCreditCardForm

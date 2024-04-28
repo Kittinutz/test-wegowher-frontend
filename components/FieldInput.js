@@ -12,6 +12,7 @@ const FieldInput = ({
   endadornment,
   showedError = ''
 }) => {
+  const limitType = typeof limit
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -21,7 +22,7 @@ const FieldInput = ({
           placeholder={placeholder}
           value={value}
           onChangeText={v => {
-            if (typeof limit === undefined) {
+            if (limitType == 'undefined') {
               onChangeText(v)
             } else if (v.length <= limit) {
               onChangeText(v)
@@ -33,11 +34,11 @@ const FieldInput = ({
         {endadornment}
       </View>
       {
-        showedError ? (<Text style={{ fontFamily: 'FC-rounded', color: '#fe0000' }}>
+        showedError && value === '' ? (<Text style={{ fontFamily: 'FC-rounded', color: '#fe0000' }}>
           Please fill the correct information.
         </Text>) : null
       }
-    </View>
+    </View >
   );
 };
 

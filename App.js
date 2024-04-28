@@ -12,6 +12,7 @@ import CreditCardFormScreen from './screen/CreditCardFormScreen';
 import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
 import HeaderLeftNavigation from './components/HeaderLeftNavigation';
+import AddCardHeader from './components/AddCardHeader';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -37,7 +38,9 @@ export default function App() {
         }}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="CardList" component={CardList} />
-          <Stack.Screen name="CreateCard" component={CreditCardFormScreen} />
+          <Stack.Screen name="CreateCard" component={CreditCardFormScreen} options={{
+            headerRight: AddCardHeader,
+          }} />
         </Stack.Navigator>
       </NavigationContainer>
     </ReduxProdiver >

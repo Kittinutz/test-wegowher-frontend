@@ -17,6 +17,8 @@ const CreditCardFormScreen = () => {
     handleCardNumberFocus,
     handleChangeName,
     handleChangeExpireDate,
+    handleExpireBlur,
+    handleExpireFocus,
     handleChangeCVV,
     cardObject,
     showedError,
@@ -59,7 +61,9 @@ const CreditCardFormScreen = () => {
               onChangeText={handleChangeExpireDate}
               value={cardObject.expire}
               showedError={showedError}
-              limit={5}
+              onBlur={handleExpireBlur}
+              onFocus={handleExpireFocus}
+              limit={4}
             />
           </View>
           <View style={{ width: width / 2 - (48 + 16) }}>
